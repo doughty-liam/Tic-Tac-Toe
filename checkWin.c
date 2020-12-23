@@ -6,83 +6,42 @@
 
 /* 
 
-Function return values: 0 = no winner
-1 = player1 has won the game
-2 = player2 has won the game
+Function return values: -1 = no winner
+0 = player1 has won the game
+1 = player2 has won the game
 
 */
 
-int checkWin( int gameGrid[ROWS][COLUMNS], int player ) {
+int checkWin( char newBoard[ROWS][COLUMNS], int player ) {
 
     int i;
     int j;
     int rowCount = 0;
     int columnCount = 0;
+    char playerSymbol;
 
-    /* Player one*/
     if( player == 0 ) {
-        
-        /* row check */
-        for( i = 0; i < 7; ++i ) {
-            
-            if( rowCount == 3 ) {
-
-                return 1; 
-            }
-            
-            rowCount = 0;
-
-            for( j = 0; j < 18; ++j ) {
-
-                if( gameGrid[i][j] == 88 ) {
-                    
-                    rowCount++;
-                }    
-            }
-        }
-
-        /* Column check */
-        for( i = 0; i < 18; ++i ) {
-            
-            if( columnCount == 3 ) {
-            
-                return 1;
-            }
-
-            columnCount = 0;
-            
-            for( j = 0; j < 7; ++j ) {
-
-                if( gameGrid[j][i] == 88 ) {
-                    
-                    columnCount++;
-                }
-            }
-        }
-        /* diagonal checks */
-        if( (  (gameGrid[0][2] == 88) && (gameGrid[3][8] == 88) && (gameGrid[6][14] == 88) ) || ( (gameGrid[0][14] == 88) && (gameGrid[3][8] == 88) && (gameGrid[6][2] == 88) )  ){
-            
-            return 1;
-        }
+        playerSymbol = 'X';
     }
 
-
-    /* Player two */ 
     if( player == 1 ) {
+        playerSymbol = 'O';
+    }
+
         
         /* row check */
-        for( i = 0; i < 7; ++i ) {
+        for( i = 0; i < ROWS; ++i ) {
             
             if( rowCount == 3 ) {
 
-                return 2; 
+                return player; 
             }
             
             rowCount = 0;
 
-            for( j = 0; j < 18; ++j ) {
+            for( j = 0; j < COLUMNS; ++j ) {
 
-                if( gameGrid[i][j] == 79 ) {
+                if( newBoard[i][j] == playerSymbol ) {
                     
                     rowCount++;
                 }    
@@ -90,18 +49,18 @@ int checkWin( int gameGrid[ROWS][COLUMNS], int player ) {
         }
 
         /* Column check */
-        for( i = 0; i < 18; ++i ) {
+        for( i = 0; i < COLUMNS; ++i ) {
             
             if( columnCount == 3 ) {
             
-                return 2;
+                return player;
             }
 
             columnCount = 0;
             
-            for( j = 0; j < 7; ++j ) {
+            for( j = 0; j < ROWS; ++j ) {
 
-                if( gameGrid[j][i] == 79 ) {
+                if( newBoard[j][i] == playerSymbol ) {
                     
                     columnCount++;
                 }
@@ -109,12 +68,12 @@ int checkWin( int gameGrid[ROWS][COLUMNS], int player ) {
         }
 
         /* diagonal checks */
-        if( (  (gameGrid[0][2] == 79) && (gameGrid[3][8] == 79) && (gameGrid[6][14] == 79) ) || ( (gameGrid[0][14] == 79) && (gameGrid[3][8] == 79) && (gameGrid[6][2] == 79) )  ){
+        if(  ( (newBoard[0][0] == playerSymbol) && (newBoard[1][1] == playerSymbol) && (newBoard[2][2] == playerSymbol) )
+           || ( (newBoard[0][2] == playerSymbol) && (newBoard[1][1] == playerSymbol) && (newBoard[2][0] == playerSymbol) )  ){
             
-            return 2;
+            return player;
         }
-    }
-
     
-    return 0;
+    
+    return -1;
 }
