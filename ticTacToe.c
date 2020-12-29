@@ -22,6 +22,7 @@ int main( int argc, char *argv[] ) {
     int j;
     int gameMode;
     int boardVal;
+    int computerMove[2];
 
     printf( "Hello! Would you like to play against the computer or with another player?\n" );
     printf( "Enter 0 to play with two players or 1 to play against the computer: " );
