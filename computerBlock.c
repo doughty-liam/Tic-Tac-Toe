@@ -20,12 +20,14 @@ int computerBlock( char newBoard[ROWS][COLUMNS], int computerMove[2] ) {
     char computerSymbol = 'O';
     int player1Count = 0;
     int computerCount = 0;
+    int blockRow;
+    int blockCol;
+    int freeSpace = 0;
 
 
     /* Checking rows for position to play block */ 
     for( i = 0; i < ROWS; ++i ) {
-
-        printf( "in row check\n" );
+        printf( "In row check\n" );
         player1Count = 0;
         computerCount = 0;
 
@@ -61,8 +63,7 @@ int computerBlock( char newBoard[ROWS][COLUMNS], int computerMove[2] ) {
 
     /* Checking columns for position to play block */
     for( j = 0; j < COLUMNS; ++j ) {
-
-        printf( "in column check\n" );
+        printf( "In column check\n" );
         player1Count = 0;
         computerCount = 0;
 
@@ -94,12 +95,75 @@ int computerBlock( char newBoard[ROWS][COLUMNS], int computerMove[2] ) {
 
     }
 
+    i = 0;
+    j = 0;
+    player1Count = 0;
+    computerCount = 0;
 
-    /* checking diagonals for position to block */
+    /* checking left diagonal for block position */
+    while( (i <= 2) && (j <= 2) ) {
+        printf( "In left diagonal check\n" );
+        if( newBoard[i][j] == computerSymbol ) {
+            return 0;                               /* function cannot block if the computer already has
+                                                       played position in the diagonal */    
+        }
 
+        if( newBoard[i][j] == player1Symbol ) {
+            player1Count += 1;
+        }
 
+        if( newBoard[i][j] != player1Symbol ) {
+            blockRow = i;
+            blockCol = j;
+            freeSpace = 1;
+        }
 
+        if( (player1Count == 2) && (freeSpace == 1) ) {
 
+            computerMove[0] = blockRow;
+            computerMove[1] = blockCol;
+            return 1;
+        }
+
+        ++i;
+        ++j;
+    }
+
+   
+    i = 0;
+    j = 2;
+    player1Count = 0;
+    computerCount = 0;
+    freeSpace = 0;
+
+    /* checking right diagonal for block position */
+    while( (i <= 2) && (j >= 0) ) {
+        printf( "In right diagonal check\n" );
+        if( newBoard[i][j] == computerSymbol ) {
+            return 0;                               /* function cannot block if the computer already has
+                                                       played position in the diagonal */    
+        }
+
+        if( newBoard[i][j] == player1Symbol ) {
+            player1Count += 1;
+        }
+
+        if( newBoard[i][j] != player1Symbol ) {
+            blockRow = i;
+            blockCol = j;
+            freeSpace = 1;
+        }
+
+        if( (player1Count == 2) && (freeSpace == 1) ) {
+
+            computerMove[0] = blockRow;
+            computerMove[1] = blockCol;
+            return 1;
+        }
+
+        ++i;
+        --j;       
+    }
 
     return 0;
 }
