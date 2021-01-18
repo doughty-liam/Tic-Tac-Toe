@@ -27,7 +27,7 @@ int computerWin( char board[ROWS][COLUMNS], int computerMove[2] ) {
             if( (board[i][j] != computerSymbol) && (board[i][j] != player1Symbol) ) {
                 freeSpace = 1;
                 winningColumn = j;
-            }
+            }    computerCount = 0;
         }
 
         if( (computerCount == 2) && (freeSpace == 1) ) {
